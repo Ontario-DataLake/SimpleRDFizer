@@ -1,0 +1,111 @@
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix rml: <http://semweb.mmlab.be/ns/rml#> .
+@prefix ql: <http://semweb.mmlab.be/ns/ql#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rev: <http://purl.org/stuff/rev#> .
+@prefix schema: <http://schema.org/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix base: <http://tib.de/ontario/mapping#> .
+@prefix tcga: <http://gdc.cancer.gov/schema/> .
+
+#Result
+<#result>
+rml:logicalSource [
+    rml:source "file:///home/kemele/git/SimpleRDFizer/sample-data/BROSE_p_TCGASNP_195_196_197_N_GenomeWideSNP_6_F12_1039594.grch38.seg.txt";
+    rml:referenceFormulation ql:TSV
+];
+
+rr:subjectMap [
+  rr:template "http://gdc.cancer.gov/schema/Sample/{Sample}";
+  rr:class tcga:SNP_Sample
+];
+
+rr:predicateObjectMap [
+  rr:predicate rdfs:label;
+  rr:objectMap [
+    rml:reference "Sample";
+    rr:datatype xsd:string
+    ]
+];
+
+
+rr:predicateObjectMap [
+  rr:predicate tcga:result;
+  rr:objectMap [ rr:parentTriplesMap <#snp_result> ]
+].
+
+
+#SNP_Result
+<#snp_result>
+rml:logicalSource [
+    rml:source "file:///home/kemele/git/SimpleRDFizer/sample-data/BROSE_p_TCGASNP_195_196_197_N_GenomeWideSNP_6_F12_1039594.grch38.seg.txt";
+    rml:referenceFormulation ql:TSV
+];
+
+rr:subjectMap [
+  rr:template "http://gdc.cancer.gov/schema/SNP_Result/{Sample}-[autoid]";
+  rr:class tcga:SNP_Result
+];
+
+
+rr:predicateObjectMap [
+  rr:predicate tcga:chromosome;
+  rr:objectMap [ rr:parentTriplesMap <#chromosome>   ]
+];
+
+
+rr:predicateObjectMap [
+  rr:predicate tcga:start;
+  rr:objectMap [
+    rml:reference "Start";
+    rr:datatype xsd:int
+    ]
+];
+
+rr:predicateObjectMap [
+  rr:predicate tcga:end;
+  rr:objectMap [
+    rml:reference "End";
+    rr:datatype xsd:int
+    ]
+];
+
+
+rr:predicateObjectMap [
+  rr:predicate tcga:seg_mean;
+  rr:objectMap [
+    rml:reference "Segment_Mean";
+    rr:datatype xsd:float
+    ]
+];
+
+
+rr:predicateObjectMap [
+  rr:predicate tcga:num_marks;
+  rr:objectMap [
+    rml:reference "Num_Probes";
+    rr:datatype xsd:int
+    ]
+].
+
+
+#Chromosome
+<#chromosome>
+rml:logicalSource [
+    rml:source "file:///home/kemele/git/SimpleRDFizer/sample-data/BROSE_p_TCGASNP_195_196_197_N_GenomeWideSNP_6_F12_1039594.grch38.seg.txt";
+    rml:referenceFormulation ql:TSV
+];
+
+rr:subjectMap [
+  rr:template "http://gdc.cancer.gov/schema/Chormosome/{Chromosome}";
+  rr:class tcga:Chromosome
+];
+
+rr:predicateObjectMap [
+  rr:predicate rdfs:label;
+  rr:objectMap [
+    rml:reference "Chromosome";
+    rr:datatype xsd:string
+    ]
+].
