@@ -126,8 +126,8 @@ def autoincrement(url):
         return None
 
 
-def transform(f, sources):
-    pdf = pd.read_csv(f, sep='\t')
+def transform(f, sources, sep='\t'):
+    pdf = pd.read_csv(f, sep=sep)
     increment = [0]
     ttls = pdf.apply(applymapping, args=(sources, increment,), axis=1)
     return ttls
@@ -236,7 +236,11 @@ def main(mappingfile):
             filesubj[Source.uri] = [Source]
     # for each file name, make transform
     for f in filesubj:
-        ttls = transform(f, filesubj[f])
+        if '.csv' in f:
+            sep = ','
+        else:
+            sep = "\t"
+        ttls = transform(f, filesubj[f], sep)
 
         flat_list = [item for sublist in ttls for item in sublist]
 
